@@ -1,21 +1,25 @@
 {
-    "name": "ezmchnkv/php-project-lvl2",
+    "name": "hexlet/code",
     "description": "hexlet php lvl2 project",
     "type": "project",
     "authors": [
         {
-            "name": "Evgenii",
+            "name": "evz",
             "email": "ezmchnkv@gmail.com"
         }
     ],
     "autoload": {
+        "files": [
+            "src/genDiff.php"
+        ],
         "psr-4": {
             "App\\": "src",
             "Tests\\": "tests"
         }
     },
     "require": {
-        "php": "^8.0"
+        "php": "^8.0",
+        "docopt/docopt": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
