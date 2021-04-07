@@ -10,6 +10,9 @@ use function Differ\Differ\genDiff;
 
 class GenDiffTest extends TestCase
 {
+    /**
+     * @covers ::\Differ\Differ\genDiff()
+     */
     public function testFirst(): void
     {
         $file1 = __DIR__ . '/fixtures/file1.json';
