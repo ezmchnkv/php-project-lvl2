@@ -42,6 +42,11 @@ function genDiff(string $filepath1, string $filepath2): string
     return format($diff);
 }
 
+/**
+ * @param string $filepath
+ * @return array<mixed>
+ * @throws \JsonException
+ */
 function getData(string $filepath): array
 {
     if (!file_exists($filepath)) {
