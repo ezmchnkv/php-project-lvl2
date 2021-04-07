@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace GenDiff\Tests;
 
 use PHPUnit\Framework\TestCase;
+
 use function Differ\Differ\genDiff;
 
 /**
