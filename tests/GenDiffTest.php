@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace GenDiff\Tests;
 
 use PHPUnit\Framework\TestCase;
-
 use function Differ\Differ\genDiff;
 
+/**
+ * @covers ::\Differ\Differ\genDiff()
+ * @covers ::\Differ\Differ\formatValue()
+ * @covers ::\Differ\Differ\format()
+ * @covers ::\Differ\Differ\getData()
+ */
 class GenDiffTest extends TestCase
 {
-    /**
-     * @covers ::\Differ\Differ\genDiff()
-     */
     public function testFirst(): void
     {
         $file1 = __DIR__ . '/fixtures/file1.json';
