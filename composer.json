@@ -9,6 +9,9 @@
             "email": "ezmchnkv@gmail.com"
         }
     ],
+    "bin": [
+        "bin/gendiff"
+    ],
     "autoload": {
         "files": [
             "src/genDiff.php"

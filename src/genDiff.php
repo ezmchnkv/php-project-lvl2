@@ -5,21 +5,14 @@ declare(strict_types=1);
 namespace Differ\Differ;
 
 use InvalidArgumentException;
+use RuntimeException;
 
-function genDiff(string $file1, string $file2): string
+function genDiff(string $filepath1, string $filepath2): string
 {
     $diff = [];
 
-    if (!file_exists($file1) || false === ($content1 = file_get_contents($file1))) {
-        throw new InvalidArgumentException("Invalid file: $file1");
-    }
-
-    if (!file_exists($file2) || false === ($content2 = file_get_contents($file2))) {
-        throw new InvalidArgumentException("Invalid file: $file2");
-    }
-
-    $data1 = json_decode($content1, true);
-    $data2 = json_decode($content2, true);
+    $data1 = getData($filepath1);
+    $data2 = getData($filepath2);
 
     foreach ($data1 as $key => $value) {
         if (!array_key_exists($key, $data2)) {
@@ -47,6 +40,20 @@ function genDiff(string $file1, string $file2): string
     }
 
     return format($diff);
+}
+
+function getData(string $filepath): array
+{
+    if (!file_exists($filepath)) {
+        throw new InvalidArgumentException("File $filepath does not exists");
+    }
+
+    $content = file_get_contents($filepath);
+    if (false === $content) {
+        throw new RuntimeException("Cannot read file $filepath");
+    }
+
+    return json_decode($content, true, 512, JSON_THROW_ON_ERROR);
 }
 
 function formatValue(mixed $value): string
