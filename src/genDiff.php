@@ -46,6 +46,8 @@ function genDiff(string $filepath1, string $filepath2): string
  * @param string $filepath
  * @return array<mixed>
  * @throws \JsonException
+ * @throws InvalidArgumentException
+ * @throws RuntimeException
  */
 function getData(string $filepath): array
 {
