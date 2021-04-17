@@ -1,5 +1,8 @@
 FROM php:8.0-cli
 
+RUN apt-get update && apt-get install zip libzip-dev unzip -y
+RUN docker-php-ext-install zip
+
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug \
     && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \

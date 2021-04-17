@@ -14,7 +14,8 @@
     ],
     "autoload": {
         "files": [
-            "src/genDiff.php"
+            "src/genDiff.php",
+            "src/Parser.php"
         ],
         "psr-4": {
             "Differ\\": "src",
@@ -23,7 +24,8 @@
     },
     "require": {
         "php": "^8.0",
-        "docopt/docopt": "^1.0"
+        "docopt/docopt": "^1.0",
+        "symfony/yaml": "^5.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
