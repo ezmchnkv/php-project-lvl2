@@ -18,7 +18,7 @@ function build(object $data1, object $data2): array
     $keys = array_values(array_unique(array_merge($keys1, $keys2)));
     $sortedKeys = sort($keys, fn($a, $b) => $a <=> $b);
 
-    return array_map(function (string $key) use ($data1, $data2) {
+    return array_map(function (string $key) use ($data1, $data2): array {
         if (!property_exists($data1, $key)) {
             return makeNode($key, 'added', null, $data2->$key);
         }

@@ -15,29 +15,28 @@ function format(array $ast, int $depth = 1): string
 
     $formatted = array_reduce($ast, function (array $acc, array $node) use ($indent, $depth): array {
         if ($node['type'] === 'nested') {
-            $acc[] = "{$indent}    {$node['key']}: " . format($node['children'], 1 + $depth);
+            return [...$acc, "{$indent}    {$node['key']}: " . format($node['children'], 1 + $depth)];
         }
 
         if ($node['type'] === 'deleted') {
             $oldValue = stringify($node['oldValue'], $depth);
-            $acc[] = "{$indent}  - {$node['key']}: {$oldValue}";
+            return [...$acc, "{$indent}  - {$node['key']}: {$oldValue}"];
         }
 
         if ($node['type'] === 'unchanged') {
             $oldValue = stringify($node['oldValue'], $depth);
-            $acc[] = "{$indent}    {$node['key']}: {$oldValue}";
+            return [...$acc, "{$indent}    {$node['key']}: {$oldValue}"];
         }
 
         if ($node['type'] === 'changed') {
             $oldValue = stringify($node['oldValue'], $depth);
             $newValue = stringify($node['newValue'], $depth);
-            $acc[] = "{$indent}  - $node[key]: $oldValue";
-            $acc[] = "{$indent}  + $node[key]: $newValue";
+            return [...$acc, "{$indent}  - $node[key]: $oldValue", "{$indent}  + $node[key]: $newValue"];
         }
 
         if ($node['type'] === 'added') {
             $newValue = stringify($node['newValue'], $depth);
-            $acc[] = "{$indent}  + $node[key]: $newValue";
+            return [...$acc, "{$indent}  + $node[key]: $newValue"];
         }
 
         return $acc;
