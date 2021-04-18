@@ -38,20 +38,16 @@ function format(array $ast, string $parent = ''): string
 function stringify(mixed $value): string
 {
     if (is_bool($value)) {
-        return $value ? 'true' : 'false';
+        $res = $value ? 'true' : 'false';
+    } elseif (is_null($value)) {
+        $res = 'null';
+    } elseif (is_object($value)) {
+        $res = '[complex value]';
+    } elseif (is_string($value)) {
+        $res = "'$value'";
+    } else {
+        $res = (string) $value;
     }
 
-    if (is_null($value)) {
-        return 'null';
-    }
-
-    if (is_object($value)) {
-        return '[complex value]';
-    }
-
-    if (is_string($value)) {
-        return "'$value'";
-    }
-
-    return (string) $value;
+    return $res;
 }
