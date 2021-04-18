@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Differ\Builder;
 
-use stdClass;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * @param object $data1

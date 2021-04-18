@@ -8,23 +8,24 @@ use InvalidArgumentException;
 use RuntimeException;
 
 use function Differ\Builder\buildDiff;
-use function Differ\Formatter\stylish;
+use function Differ\Formatter\format;
 use function Differ\Parser\parse;
 
 /**
  * @param string $filepath1
  * @param string $filepath2
+ * @param string $format
  * @return string
  */
-function genDiff(string $filepath1, string $filepath2): string
+function genDiff(string $filepath1, string $filepath2, string $format = 'stylish'): string
 {
     $data1 = getData($filepath1);
     $data2 = getData($filepath2);
 
     $diff = buildDiff($data1, $data2);
-//    print_r($diff);exit;
-    $res = stylish($diff);
-//    print_r($res);exit;
+    $res = format($format, $diff);
+//    print_r($res);
+//    exit;
     return $res;
 }
 

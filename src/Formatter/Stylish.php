@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Differ\Formatter;
+namespace Differ\Formatter\Stylish;
 
 /**
  * @param array<int, array> $diff
  * @param int $depth
  * @return string
  */
-function stylish(array $diff, int $depth = 1): string
+function format(array $diff, int $depth = 1): string
 {
     $indent = str_repeat(' ', 4 * ($depth - 1));
 
@@ -27,7 +27,7 @@ function stylish(array $diff, int $depth = 1): string
         $newValue = stringify($newValue, $depth);
 
         if ($type === 'nested') {
-            $formatted[] = "{$indent}    $key: " . stylish($children, 1 + $depth);
+            $formatted[] = "{$indent}    $key: " . format($children, 1 + $depth);
         }
 
         if ($type === 'deleted') {
