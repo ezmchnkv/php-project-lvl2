@@ -8,21 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 use function Differ\Differ\genDiff;
 
-/**
- * @covers ::\Differ\Differ\genDiff()
- * @covers ::\Differ\Differ\getData()
- * @covers ::\Differ\Parser\getParser()
- * @covers ::\Differ\Parser\parse()
- * @covers ::\Differ\Ast\build()
- * @covers ::\Differ\Ast\makeNode()
- * @covers ::\Differ\Ast\makeNestedNode()
- * @covers ::\Differ\Formatters\Plain\stringify()
- * @covers ::\Differ\Formatters\Plain\format()
- * @covers ::\Differ\Formatters\Stylish\stringify()
- * @covers ::\Differ\Formatters\Stylish\format()
- * @covers ::\Differ\Formatters\Json\format()
- * @covers ::\Differ\Formatters\format()
- */
 class GenDiffTest extends TestCase
 {
     /**

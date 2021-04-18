@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use RuntimeException;
 
 use function Differ\Ast\build;
-use function Differ\Parser\parse;
+use function Differ\Parser\getParser;
 use function Differ\Formatters\format;
 
 /**
@@ -42,5 +42,5 @@ function getData(string $filepath): object
     }
 
     $format = pathinfo($filepath, PATHINFO_EXTENSION);
-    return parse($content, $format);
+    return getParser($format)($content);
 }
