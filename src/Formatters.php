@@ -17,6 +17,6 @@ function format(string $format, array $ast): string
         'json' => Json\format($ast),
         'plain' => Plain\format($ast),
         'stylish' => Stylish\format($ast),
-    default => throw new RuntimeException("The format $format unsupported"),
+        default => throw new RuntimeException("The format $format unsupported"),
     };
 }
