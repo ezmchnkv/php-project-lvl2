@@ -15,11 +15,11 @@ use function Differ\Differ\genDiff;
  * @covers ::\Differ\Parser\parse()
  * @covers ::\Differ\Builder\buildDiff()
  * @covers ::\Differ\Builder\makeNode()
- * @covers ::\Differ\Formatter\Plain\stringify()
- * @covers ::\Differ\Formatter\Plain\format()
- * @covers ::\Differ\Formatter\Stylish\stringify()
- * @covers ::\Differ\Formatter\Stylish\format()
- * @covers ::\Differ\Formatter\format()
+ * @covers ::\Differ\Formatters\Plain\stringify()
+ * @covers ::\Differ\Formatters\Plain\format()
+ * @covers ::\Differ\Formatters\Stylish\stringify()
+ * @covers ::\Differ\Formatters\Stylish\format()
+ * @covers ::\Differ\Formatters\format()
  */
 class GenDiffTest extends TestCase
 {
