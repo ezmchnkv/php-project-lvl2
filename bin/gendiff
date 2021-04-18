@@ -29,3 +29,4 @@ $args = Docopt::handle(DOC, ['version' => '1.0']);
 
 $diff = genDiff($file1, $file2, $format);
 echo $diff;
+echo "\n";

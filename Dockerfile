@@ -1,6 +1,6 @@
 FROM php:8.0-cli
 
-RUN apt-get update && apt-get install zip libzip-dev unzip -y
+RUN apt-get update && apt-get install zip libzip-dev unzip asciinema -y
 RUN docker-php-ext-install zip
 
 RUN pecl install xdebug \
