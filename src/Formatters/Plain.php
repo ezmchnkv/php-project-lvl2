@@ -15,25 +15,21 @@ function format(array $ast, string $parent = ''): string
         $property = "{$parent}{$node['key']}";
 
         if ($node['type'] === 'nested') {
-            return format($node['children'], "{$property}.");
-        }
-
-        if ($node['type'] === 'deleted') {
-            return "Property '{$property}' was removed";
-        }
-
-        if ($node['type'] === 'changed') {
+            $formatted = format($node['children'], "{$property}.");
+        } elseif ($node['type'] === 'deleted') {
+            $formatted = "Property '{$property}' was removed";
+        } elseif ($node['type'] === 'changed') {
             $oldValue = stringify($node['oldValue']);
             $newValue = stringify($node['newValue']);
-            return "Property '{$property}' was updated. From {$oldValue} to {$newValue}";
-        }
-
-        if ($node['type'] === 'added') {
+            $formatted = "Property '{$property}' was updated. From {$oldValue} to {$newValue}";
+        } elseif ($node['type'] === 'added') {
             $newValue = stringify($node['newValue']);
-            return "Property '{$property}' was added with value: {$newValue}";
+            $formatted = "Property '{$property}' was added with value: {$newValue}";
+        } else {
+            $formatted = '';
         }
 
-        return '';
+        return $formatted;
     }, $ast);
 
     return implode("\n", array_filter($formatted));

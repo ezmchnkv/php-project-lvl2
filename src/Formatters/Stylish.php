@@ -15,31 +15,25 @@ function format(array $ast, int $depth = 1): string
 
     $formatted = array_reduce($ast, function (array $acc, array $node) use ($indent, $depth): array {
         if ($node['type'] === 'nested') {
-            return [...$acc, "{$indent}    {$node['key']}: " . format($node['children'], 1 + $depth)];
-        }
-
-        if ($node['type'] === 'deleted') {
+            $newAcc = [...$acc, "{$indent}    {$node['key']}: " . format($node['children'], 1 + $depth)];
+        } elseif ($node['type'] === 'deleted') {
             $oldValue = stringify($node['oldValue'], $depth);
-            return [...$acc, "{$indent}  - {$node['key']}: {$oldValue}"];
-        }
-
-        if ($node['type'] === 'unchanged') {
+            $newAcc = [...$acc, "{$indent}  - {$node['key']}: {$oldValue}"];
+        } elseif ($node['type'] === 'unchanged') {
             $oldValue = stringify($node['oldValue'], $depth);
-            return [...$acc, "{$indent}    {$node['key']}: {$oldValue}"];
-        }
-
-        if ($node['type'] === 'changed') {
+            $newAcc = [...$acc, "{$indent}    {$node['key']}: {$oldValue}"];
+        } elseif ($node['type'] === 'changed') {
             $oldValue = stringify($node['oldValue'], $depth);
             $newValue = stringify($node['newValue'], $depth);
-            return [...$acc, "{$indent}  - $node[key]: $oldValue", "{$indent}  + $node[key]: $newValue"];
-        }
-
-        if ($node['type'] === 'added') {
+            $newAcc = [...$acc, "{$indent}  - $node[key]: $oldValue", "{$indent}  + $node[key]: $newValue"];
+        } elseif ($node['type'] === 'added') {
             $newValue = stringify($node['newValue'], $depth);
-            return [...$acc, "{$indent}  + $node[key]: $newValue"];
+            $newAcc = [...$acc, "{$indent}  + $node[key]: $newValue"];
+        } else {
+            $newAcc = $acc;
         }
 
-        return $acc;
+        return $newAcc;
     }, []);
 
     return "{\n" . implode("\n", $formatted) . "\n$indent}";
@@ -48,14 +42,10 @@ function format(array $ast, int $depth = 1): string
 function stringify(mixed $value, int $depth = 1): string
 {
     if (is_bool($value)) {
-        return $value ? 'true' : 'false';
-    }
-
-    if (is_null($value)) {
-        return 'null';
-    }
-
-    if (is_object($value)) {
+        $res = $value ? 'true' : 'false';
+    } elseif (is_null($value)) {
+        $res = 'null';
+    } elseif (is_object($value)) {
         $keys = array_keys(get_object_vars($value));
         $indent = str_repeat(' ', 4 * $depth);
 
@@ -64,8 +54,10 @@ function stringify(mixed $value, int $depth = 1): string
             return "{$indent}    {$key}: {$formattedValue}";
         }, $keys);
         $formattedString = implode("\n", $formatted);
-        return "{\n$formattedString\n$indent}";
+        $res = "{\n$formattedString\n$indent}";
+    } else {
+        $res = (string) $value;
     }
 
-    return (string) $value;
+    return $res;
 }
