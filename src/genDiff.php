@@ -7,7 +7,7 @@ namespace Differ\Differ;
 use InvalidArgumentException;
 use RuntimeException;
 
-use function Differ\Builder\buildDiff;
+use function Differ\Ast\build;
 use function Differ\Parser\parse;
 use function Differ\Formatters\format;
 
@@ -22,15 +22,15 @@ function genDiff(string $filepath1, string $filepath2, string $format = 'stylish
     $data1 = getData($filepath1);
     $data2 = getData($filepath2);
 
-    $diff = buildDiff($data1, $data2);
+    $diff = build($data1, $data2);
     return format($format, $diff);
 }
 
 /**
  * @param string $filepath
- * @return \stdClass
+ * @return object
  */
-function getData(string $filepath): \stdClass
+function getData(string $filepath): object
 {
     if (!file_exists($filepath)) {
         throw new InvalidArgumentException("File $filepath does not exists");

@@ -5,40 +5,32 @@ declare(strict_types=1);
 namespace Differ\Formatters\Plain;
 
 /**
- * @param array<int, mixed> $diff
+ * @param array<int, mixed> $ast
  * @param string $parent
  * @return string
  */
-function format(array $diff, string $parent = ''): string
+function format(array $ast, string $parent = ''): string
 {
     $formatted = [];
-    foreach (
-        $diff as [
-            'key' => $key,
-            'type' => $type,
-            'oldValue' => $oldValue,
-            'newValue' => $newValue,
-            'children' => $children
-        ]
-    ) {
-        $property = "$parent$key";
+    foreach ($ast as $node) {
+        $property = "$parent$node[key]";
 
-        $oldValue = stringify($oldValue);
-        $newValue = stringify($newValue);
-
-        if ($type === 'nested') {
-            $formatted[] = format($children, "$property.");
+        if ($node['type'] === 'nested') {
+            $formatted[] = format($node['children'], "$property.");
         }
 
-        if ($type === 'deleted') {
+        if ($node['type'] === 'deleted') {
             $formatted[] = "Property '{$property}' was removed";
         }
 
-        if ($type === 'changed') {
+        if ($node['type'] === 'changed') {
+            $oldValue = stringify($node['oldValue']);
+            $newValue = stringify($node['newValue']);
             $formatted[] = "Property '{$property}' was updated. From $oldValue to $newValue";
         }
 
-        if ($type === 'added') {
+        if ($node['type'] === 'added') {
+            $newValue = stringify($node['newValue']);
             $formatted[] = "Property '{$property}' was added with value: $newValue";
         }
     }

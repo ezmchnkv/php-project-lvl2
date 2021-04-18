@@ -5,46 +5,40 @@ declare(strict_types=1);
 namespace Differ\Formatters\Stylish;
 
 /**
- * @param array<int, array> $diff
+ * @param array<int, array> $ast
  * @param int $depth
  * @return string
  */
-function format(array $diff, int $depth = 1): string
+function format(array $ast, int $depth = 1): string
 {
     $indent = str_repeat(' ', 4 * ($depth - 1));
 
     $formatted = [];
-    foreach (
-        $diff as [
-            'key' => $key,
-            'type' => $type,
-            'oldValue' => $oldValue,
-            'newValue' => $newValue,
-            'children' => $children
-        ]
-    ) {
-        $oldValue = stringify($oldValue, $depth);
-        $newValue = stringify($newValue, $depth);
-
-        if ($type === 'nested') {
-            $formatted[] = "{$indent}    $key: " . format($children, 1 + $depth);
+    foreach ($ast as $node) {
+        if ($node['type'] === 'nested') {
+            $formatted[] = "{$indent}    $node[key]: " . format($node['children'], 1 + $depth);
         }
 
-        if ($type === 'deleted') {
-            $formatted[] = "{$indent}  - $key: $oldValue";
+        if ($node['type'] === 'deleted') {
+            $oldValue = stringify($node['oldValue'], $depth);
+            $formatted[] = "{$indent}  - $node[key]: $oldValue";
         }
 
-        if ($type === 'unchanged') {
-            $formatted[] = "{$indent}    $key: $oldValue";
+        if ($node['type'] === 'unchanged') {
+            $oldValue = stringify($node['oldValue'], $depth);
+            $formatted[] = "{$indent}    $node[key]: $oldValue";
         }
 
-        if ($type === 'changed') {
-            $formatted[] = "{$indent}  - $key: $oldValue";
-            $formatted[] = "{$indent}  + $key: $newValue";
+        if ($node['type'] === 'changed') {
+            $oldValue = stringify($node['oldValue'], $depth);
+            $newValue = stringify($node['newValue'], $depth);
+            $formatted[] = "{$indent}  - $node[key]: $oldValue";
+            $formatted[] = "{$indent}  + $node[key]: $newValue";
         }
 
-        if ($type === 'added') {
-            $formatted[] = "{$indent}  + $key: $newValue";
+        if ($node['type'] === 'added') {
+            $newValue = stringify($node['newValue'], $depth);
+            $formatted[] = "{$indent}  + $node[key]: $newValue";
         }
     }
 

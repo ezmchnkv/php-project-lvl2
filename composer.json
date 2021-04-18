@@ -16,7 +16,7 @@
         "files": [
             "src/genDiff.php",
             "src/Parser.php",
-            "src/Builder.php",
+            "src/Ast.php",
             "src/Formatters.php",
             "src/Formatters/Stylish.php",
             "src/Formatters/Plain.php"
