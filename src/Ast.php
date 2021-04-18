@@ -16,31 +16,25 @@ function build(object $data1, object $data2): array
     $keys = array_values(array_unique(array_merge($keys1, $keys2)));
     usort($keys, fn($a, $b) => $a <=> $b);
 
-    $ast = [];
-    foreach ($keys as $key) {
+    return array_map(function (string $key) use ($data1, $data2) {
         if (!property_exists($data1, $key)) {
-            $ast[] = makeNode($key, 'added', null, $data2->$key);
-            continue;
+            return makeNode($key, 'added', null, $data2->$key);
         }
 
         if (!property_exists($data2, $key)) {
-            $ast[] = makeNode($key, 'deleted', $data1->$key);
-            continue;
+            return makeNode($key, 'deleted', $data1->$key);
         }
 
         if (is_object($data1->$key) && is_object($data2->$key)) {
-            $ast[] = makeNestedNode($key, build($data1->$key, $data2->$key));
-            continue;
+            return makeNestedNode($key, build($data1->$key, $data2->$key));
         }
 
         if ($data1->$key !== $data2->$key) {
-            $ast[] = makeNode($key, 'changed', $data1->$key, $data2->$key);
-            continue;
+            return makeNode($key, 'changed', $data1->$key, $data2->$key);
         }
-        $ast[] = makeNode($key, 'unchanged', $data1->$key, $data2->$key);
-    }
 
-    return $ast;
+        return makeNode($key, 'unchanged', $data1->$key, $data2->$key);
+    }, $keys);
 }
 
 /**

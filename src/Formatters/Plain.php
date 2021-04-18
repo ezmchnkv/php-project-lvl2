@@ -11,31 +11,32 @@ namespace Differ\Formatters\Plain;
  */
 function format(array $ast, string $parent = ''): string
 {
-    $formatted = [];
-    foreach ($ast as $node) {
-        $property = "$parent$node[key]";
+    $formatted = array_map(function (array $node) use ($parent) {
+        $property = "{$parent}{$node['key']}";
 
         if ($node['type'] === 'nested') {
-            $formatted[] = format($node['children'], "$property.");
+            return format($node['children'], "{$property}.");
         }
 
         if ($node['type'] === 'deleted') {
-            $formatted[] = "Property '{$property}' was removed";
+            return "Property '{$property}' was removed";
         }
 
         if ($node['type'] === 'changed') {
             $oldValue = stringify($node['oldValue']);
             $newValue = stringify($node['newValue']);
-            $formatted[] = "Property '{$property}' was updated. From $oldValue to $newValue";
+            return "Property '{$property}' was updated. From {$oldValue} to {$newValue}";
         }
 
         if ($node['type'] === 'added') {
             $newValue = stringify($node['newValue']);
-            $formatted[] = "Property '{$property}' was added with value: $newValue";
+            return "Property '{$property}' was added with value: {$newValue}";
         }
-    }
 
-    return implode("\n", $formatted);
+        return '';
+    }, $ast);
+
+    return implode("\n", array_filter($formatted));
 }
 
 function stringify(mixed $value): string
