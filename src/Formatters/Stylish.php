@@ -13,7 +13,7 @@ function format(array $ast, int $depth = 1): string
 {
     $indent = str_repeat(' ', 4 * ($depth - 1));
 
-    $formatted = array_reduce($ast, function (array $acc, array $node) use ($indent, $depth) {
+    $formatted = array_reduce($ast, function (array $acc, array $node) use ($indent, $depth): array {
         if ($node['type'] === 'nested') {
             $acc[] = "{$indent}    {$node['key']}: " . format($node['children'], 1 + $depth);
         }
@@ -60,7 +60,7 @@ function stringify(mixed $value, int $depth = 1): string
         $keys = array_keys(get_object_vars($value));
         $indent = str_repeat(' ', 4 * $depth);
 
-        $formatted = array_map(function (string $key) use ($indent, $value, $depth) {
+        $formatted = array_map(function (string $key) use ($indent, $value, $depth): string {
             $formattedValue = stringify($value->$key, 1 + $depth);
             return "{$indent}    {$key}: {$formattedValue}";
         }, $keys);

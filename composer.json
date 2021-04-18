@@ -30,7 +30,8 @@
     "require": {
         "php": "^8.0",
         "docopt/docopt": "^1.0",
-        "symfony/yaml": "^5.2"
+        "symfony/yaml": "^5.2",
+        "lstrojny/functional-php": "^1.17"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",

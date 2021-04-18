@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Differ\Ast;
 
+use function Functional\sort;
+
 /**
  * @param object $data1
  * @param object $data2
@@ -14,7 +16,7 @@ function build(object $data1, object $data2): array
     $keys1 = array_keys(get_object_vars($data1));
     $keys2 = array_keys(get_object_vars($data2));
     $keys = array_values(array_unique(array_merge($keys1, $keys2)));
-    usort($keys, fn($a, $b) => $a <=> $b);
+    $sortedKeys = sort($keys, fn($a, $b) => $a <=> $b);
 
     return array_map(function (string $key) use ($data1, $data2) {
         if (!property_exists($data1, $key)) {
@@ -34,7 +36,7 @@ function build(object $data1, object $data2): array
         }
 
         return makeNode($key, 'unchanged', $data1->$key, $data2->$key);
-    }, $keys);
+    }, $sortedKeys);
 }
 
 /**

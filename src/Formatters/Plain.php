@@ -11,7 +11,7 @@ namespace Differ\Formatters\Plain;
  */
 function format(array $ast, string $parent = ''): string
 {
-    $formatted = array_map(function (array $node) use ($parent) {
+    $formatted = array_map(function (array $node) use ($parent): string {
         $property = "{$parent}{$node['key']}";
 
         if ($node['type'] === 'nested') {
