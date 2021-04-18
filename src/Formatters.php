@@ -8,14 +8,15 @@ use RuntimeException;
 
 /**
  * @param string $format
- * @param array<int, mixed> $diff
+ * @param array<int, mixed> $ast
  * @return string
  */
-function format(string $format, array $diff): string
+function format(string $format, array $ast): string
 {
     return match ($format) {
-        'plain' => Plain\format($diff),
-        'stylish' => Stylish\format($diff),
+        'json' => Json\format($ast),
+        'plain' => Plain\format($ast),
+        'stylish' => Stylish\format($ast),
     default => throw new RuntimeException("The format $format unsupported"),
     };
 }
