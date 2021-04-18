@@ -15,7 +15,9 @@
     "autoload": {
         "files": [
             "src/genDiff.php",
-            "src/Parser.php"
+            "src/Parser.php",
+            "src/Builder.php",
+            "src/Formatter.php"
         ],
         "psr-4": {
             "Differ\\": "src",
