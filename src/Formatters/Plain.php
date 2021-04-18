@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Differ\Formatter\Plain;
+namespace Differ\Formatters\Plain;
 
 /**
  * @param array<int, mixed> $diff

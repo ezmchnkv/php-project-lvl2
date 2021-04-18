@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Differ\Formatter;
+namespace Differ\Formatters;
 
 use RuntimeException;
 

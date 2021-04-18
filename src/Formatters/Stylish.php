@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Differ\Formatter\Stylish;
+namespace Differ\Formatters\Stylish;
 
 /**
  * @param array<int, array> $diff

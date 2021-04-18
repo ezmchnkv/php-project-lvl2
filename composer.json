@@ -17,9 +17,9 @@
             "src/genDiff.php",
             "src/Parser.php",
             "src/Builder.php",
-            "src/Formatter/Formatter.php",
-            "src/Formatter/Stylish.php",
-            "src/Formatter/Plain.php"
+            "src/Formatters.php",
+            "src/Formatters/Stylish.php",
+            "src/Formatters/Plain.php"
         ],
         "psr-4": {
             "Differ\\": "src",
